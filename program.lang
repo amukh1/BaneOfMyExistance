@@ -1,0 +1,12 @@
+int a = 6;
+int b = 7;
+
+int main(int argc, ...) {
+    printf("Hello world\n");
+    printf("a + b = %d\n", add(a, b));
+    return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
