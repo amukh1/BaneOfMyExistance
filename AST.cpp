@@ -40,6 +40,7 @@ string Expression::JSON() {
   string json = "{\"type\":\"" + this->ntype + "\",\"body\":[";
   for (int i = 0; i < this->children.size(); i++) {
     json += this->children[i]->JSON();
+    // cout << "child " << i << endl;
     if (i != this->children.size() - 1) {
       json += ",";
     }
@@ -50,21 +51,21 @@ string Expression::JSON() {
 }
 
 string Identifier::JSON() {
-  cout << "identifier" << endl;
+  // cout << "identifier" << endl;
   string ret = "{\"type\":\"" + this->ntype + "\",\"value\":\"" + this->token[1] + "\"}";
-  cout << ret << endl;
+  // cout << ret << endl;
 return ret;
 }
 
 string variableDeclaration::JSON() {
 //   Identifier id = (this->identifier);
   // cout << this->identifier->ntype << endl;
-  string json = "{\"type\":\"" + this->ntype + "\",\"identifier\":"  + "}"; // + ",\"body\":" + this->body->JSON() + "}"
-//   if(this->isDefined) {
-//     json += ",\"body\":" + this->body->JSON() + "}";
-//   } else {
-//     json += "}";
-//   }
+  string json = "{\"type\":\"" + this->ntype + "\",\"identifier\":" + this->identifier->JSON();
+  if(this->isDefined) {
+    json += ",\"body\":" + this->body->JSON() + "}";
+  } else {
+    json += "}";
+  }
   cout << json << endl;
   return json;
 }

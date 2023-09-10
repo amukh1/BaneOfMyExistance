@@ -28,12 +28,13 @@ void Parser::parse(
 
 
       id->token = tokens[i + 1];
-      node->identifier = (id);
+      node->identifier = move(id);
 
       if (tokens[i + 2][0] == "SEMI") {
         node->isDefined = false;
-        this->AST.push_back((unique_ptr<Node>)make_unique<variableDeclaration>(move(node)));
+        this->AST.push_back((unique_ptr<Node>)(move(node)));
       } else {
+        node->isDefined = true;
         int j = i+1;
         vector<vector<string>> tokenBody;
         while (tokens[j][0] != "SEMI") {
@@ -43,8 +44,8 @@ void Parser::parse(
         Parser par;
         par.parse(tokenBody);
         body->body = &(par.AST);
-        node->body = (body);
-        this->AST.push_back((unique_ptr<Node>)make_unique<variableDeclaration>(move(node)));
+        node->body = move(body);
+        this->AST.push_back((unique_ptr<Node>)(move(node)));
       }
     } else if (token[0] == "STRING" || token[0] == "NUMBER") {
       Literal literal = Literal();
