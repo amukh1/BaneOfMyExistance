@@ -58,7 +58,7 @@ return ret;
 
 string variableDeclaration::JSON() {
 //   Identifier id = (this->identifier);
-  cout << this->identifier->ntype << endl;
+  // cout << this->identifier->ntype << endl;
   string json = "{\"type\":\"" + this->ntype + "\",\"identifier\":"  + "}"; // + ",\"body\":" + this->body->JSON() + "}"
 //   if(this->isDefined) {
 //     json += ",\"body\":" + this->body->JSON() + "}";

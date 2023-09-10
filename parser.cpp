@@ -21,17 +21,17 @@ void Parser::parse(
         cout << "error, Identifier must be of type WORD." << endl;
         return;
       }
-      variableDeclaration node;
-      Identifier id;
-      Expression body;
+      unique_ptr<variableDeclaration> node = make_unique<variableDeclaration>();
+      unique_ptr<Identifier> id = make_unique<Identifier>();
+      unique_ptr<Expression> body = make_unique<Expression>();
 
 
 
-      id.token = tokens[i + 1];
-      node.identifier = make_unique<Identifier>(id);
+      id->token = tokens[i + 1];
+      node->identifier = (id);
 
       if (tokens[i + 2][0] == "SEMI") {
-        node.isDefined = false;
+        node->isDefined = false;
         this->AST.push_back((unique_ptr<Node>)make_unique<variableDeclaration>(move(node)));
       } else {
         int j = i+1;
@@ -42,8 +42,8 @@ void Parser::parse(
         }
         Parser par;
         par.parse(tokenBody);
-        body.body = &(par.AST);
-        node.body = make_unique<Expression>(body);
+        body->body = &(par.AST);
+        node->body = (body);
         this->AST.push_back((unique_ptr<Node>)make_unique<variableDeclaration>(move(node)));
       }
     } else if (token[0] == "STRING" || token[0] == "NUMBER") {
