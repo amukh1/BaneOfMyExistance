@@ -13,7 +13,7 @@ public:
   string type;
   string ntype;
   string value;
-  vector<unique_ptr<Node>> children;
+  vector<shared_ptr<Node>> children;
   Node() = default;
   virtual string JSON();
   virtual ~Node() = default;
@@ -34,7 +34,7 @@ class Expression : public Node {
 public:
   Expression() = default;
   string ntype = "EXPRESSION";
-  vector<unique_ptr<Node>>* body;
+  vector<shared_ptr<Node>> body;
  string JSON();
 };
 
@@ -54,8 +54,8 @@ class variableDeclaration : public Node {
 public:
   variableDeclaration() = default;
   string ntype = "VARIABLEDECLARATION";
-  unique_ptr<Identifier> identifier;
+  shared_ptr<Identifier> identifier;
   bool isDefined;
-  unique_ptr<Expression> body;
+  shared_ptr<Expression> body;
   string JSON();
 };

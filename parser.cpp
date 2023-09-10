@@ -10,8 +10,8 @@
 using namespace std;
 
 void Parser::parse(
-    vector<vector<string>> tokens) { // this->AST.push_back((unique_ptr<Node>)
-                                     // make_unique<Literal>(move(CHILD_NODE)));
+    vector<vector<string>> tokens) { // this->AST.push_back((shared_ptr<Node>)
+                                     // make_shared<Literal>(move(CHILD_NODE)));
   for (int i = 0; i < tokens.size(); i++) {
     vector<string> token = tokens[i];
     if (token[0] == "TYPE" &&
@@ -21,9 +21,9 @@ void Parser::parse(
         cout << "error, Identifier must be of type WORD." << endl;
         return;
       }
-      unique_ptr<variableDeclaration> node = make_unique<variableDeclaration>();
-      unique_ptr<Identifier> id = make_unique<Identifier>();
-      unique_ptr<Expression> body = make_unique<Expression>();
+      shared_ptr<variableDeclaration> node = make_shared<variableDeclaration>();
+      shared_ptr<Identifier> id = make_shared<Identifier>();
+      shared_ptr<Expression> body = make_shared<Expression>();
 
 
 
@@ -32,10 +32,10 @@ void Parser::parse(
 
       if (tokens[i + 2][0] == "SEMI") {
         node->isDefined = false;
-        this->AST.push_back((unique_ptr<Node>)(move(node)));
+        this->AST.push_back((shared_ptr<Node>)(move(node)));
       } else {
         node->isDefined = true;
-        int j = i+1;
+        int j = i+2;
         vector<vector<string>> tokenBody;
         while (tokens[j][0] != "SEMI") {
           tokenBody.push_back(tokens[j]);
@@ -43,9 +43,9 @@ void Parser::parse(
         }
         Parser par;
         par.parse(tokenBody);
-        body->body = &(par.AST);
+        body->body = (par.AST);
         node->body = move(body);
-        this->AST.push_back((unique_ptr<Node>)(move(node)));
+        this->AST.push_back((shared_ptr<Node>)(move(node)));
       }
     } else if (token[0] == "STRING" || token[0] == "NUMBER") {
       Literal literal = Literal();
@@ -53,7 +53,7 @@ void Parser::parse(
       literal.value = token[1];
 
       this->AST.push_back(
-          (unique_ptr<Node>)make_unique<Literal>(move(literal)));
+          (shared_ptr<Node>)make_shared<Literal>(move(literal)));
     }
   }
   return;

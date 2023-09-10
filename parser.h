@@ -12,6 +12,6 @@ using namespace std;
 
 class Parser {
     public:
-    vector<unique_ptr<Node>> AST;
+    vector<shared_ptr<Node>> AST;
     void parse(vector<vector<string>> tokens);
 };

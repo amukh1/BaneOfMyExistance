@@ -22,7 +22,7 @@ using namespace std;
 
 string Node::JSON() { return "IN PROGRESS"; }
 
-// Node::Node(string type, string value, vector<unique_ptr<Node>> children) {
+// Node::Node(string type, string value, vector<shared_ptr<Node>> children) {
 //     this->type = type;
 //     this->value = value;
 //     this->children = move(children);
@@ -38,15 +38,14 @@ string Literal::JSON() {
 
 string Expression::JSON() {
   string json = "{\"type\":\"" + this->ntype + "\",\"body\":[";
-  for (int i = 0; i < this->children.size(); i++) {
-    json += this->children[i]->JSON();
-    // cout << "child " << i << endl;
-    if (i != this->children.size() - 1) {
+  for (int i = 0; i < this->body.size(); i++) {
+    json += this->body[i]->JSON();
+    if (i != this->body.size() - 1) {
       json += ",";
     }
   }
   json += "]}";
-  cout << json << endl;
+  // cout << json << endl;
   return json;
 }
 
