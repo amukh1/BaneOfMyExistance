@@ -52,7 +52,10 @@ void Parser::parse(
         this->AST.push_back((shared_ptr<Node>)(move(node)));
         i = j;
       }
-    }else if(pType == "Expression" && tokens[i][0] == "WORD" && tokens[i+1][0] == "O-PAREN") {
+    }
+    
+    
+    else if(pType == "Expression" && tokens[i][0] == "WORD" && tokens[i+1][0] == "O-PAREN") {
       shared_ptr<funcCall> node = make_shared<funcCall>();
       shared_ptr<Expression> params = make_shared<Expression>();
 
@@ -81,14 +84,10 @@ void Parser::parse(
       node->params = move(params);
       this->AST.push_back((shared_ptr<Node>)(move(node)));
       i = j;
-    }
-    else if(token[0] == "COMMA") {
+    }else if(token[0] == "COMMA") {
       shared_ptr<seperator> node = make_shared<seperator>();
       this->AST.push_back((shared_ptr<Node>)(move(node)));
-    }
-    
-    
-    else if (token[0] == "STRING" || token[0] == "NUMBER") {
+    }else if (token[0] == "STRING" || token[0] == "NUMBER") {
       Literal literal = Literal();
       literal.type = token[0];
       literal.value = token[1];
