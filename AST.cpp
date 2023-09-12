@@ -65,7 +65,7 @@ string variableDeclaration::JSON() {
   } else {
     json += "}";
   }
-  cout << json << endl;
+  // cout << json << endl;
   return json;
 }
 

@@ -36,10 +36,10 @@ void Parser::parse(
       if (tokens[i + 2][0] == "SEMI") {
         node->isDefined = false;
         this->AST.push_back((shared_ptr<Node>)(move(node)));
-        i+= 4;
+        i+= 2;
       } else {
         node->isDefined = true;
-        int j = i+2;
+        int j = i+3;
         vector<vector<string>> tokenBody;
         while (tokens[j][0] != "SEMI") {
           tokenBody.push_back(tokens[j]);
@@ -50,7 +50,7 @@ void Parser::parse(
         body->body = (par.AST);
         node->body = move(body);
         this->AST.push_back((shared_ptr<Node>)(move(node)));
-        i = j+1;
+        i = j;
       }
     }else if(pType == "Expression" && tokens[i][0] == "WORD" && tokens[i+1][0] == "O-PAREN") {
       shared_ptr<funcCall> node = make_shared<funcCall>();
