@@ -68,6 +68,9 @@ void Parser::parse(
         }else if(tokens[j][0] == "C-PAREN") {
           parenCount--;
         }
+        if(parenCount == 0) {
+          break;
+        }
         tokenBody.push_back(tokens[j]);
         j++;
       }
@@ -78,7 +81,11 @@ void Parser::parse(
       node->params = move(params);
       this->AST.push_back((shared_ptr<Node>)(move(node)));
       i = j;
-    } 
+    }
+    else if(token[0] == "COMMA") {
+      shared_ptr<seperator> node = make_shared<seperator>();
+      this->AST.push_back((shared_ptr<Node>)(move(node)));
+    }
     
     
     else if (token[0] == "STRING" || token[0] == "NUMBER") {
@@ -88,6 +95,8 @@ void Parser::parse(
 
       this->AST.push_back(
           (shared_ptr<Node>)make_shared<Literal>(move(literal)));
+    }else {
+      cout << "error: unexpected token at" << i << endl;
     }
   }
   return;

@@ -68,3 +68,10 @@ class funcCall : public Node {
   shared_ptr<Expression> params;
   string JSON();
 };
+
+class seperator : public Node {
+  public:
+  seperator() = default;
+  string ntype = "SEPERATOR";
+  string JSON();
+};

@@ -74,6 +74,11 @@ string funcCall::JSON() {
   return json;
 }
 
+string seperator::JSON() {
+  string json = "{\"ntype\":\"" + this->ntype + "\"}";
+  return json;
+}
+
 
 
 // Identifier::Identifier() {
