@@ -59,3 +59,12 @@ public:
   shared_ptr<Expression> body;
   string JSON();
 };
+
+class funcCall : public Node {
+  public:
+  funcCall() = default;
+  string ntype = "FUNCCALL";
+  string name;
+  shared_ptr<Expression> params;
+  string JSON();
+};

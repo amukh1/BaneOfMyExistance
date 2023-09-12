@@ -10,8 +10,10 @@
 using namespace std;
 
 void Parser::parse(
-    vector<vector<string>> tokens) { // this->AST.push_back((shared_ptr<Node>)
+    vector<vector<string>> tokens, string pType) { // this->AST.push_back((shared_ptr<Node>)
                                      // make_shared<Literal>(move(CHILD_NODE)));
+  // cout << tokens[tokens.size() - 1][0] << endl;
+
   for (int i = 0; i < tokens.size(); i++) {
     vector<string> token = tokens[i];
     if (token[0] == "TYPE" &&
@@ -29,10 +31,12 @@ void Parser::parse(
 
       id->token = tokens[i + 1];
       node->identifier = move(id);
+      node->type = token[1];
 
       if (tokens[i + 2][0] == "SEMI") {
         node->isDefined = false;
         this->AST.push_back((shared_ptr<Node>)(move(node)));
+        i+= 4;
       } else {
         node->isDefined = true;
         int j = i+2;
@@ -42,12 +46,42 @@ void Parser::parse(
           j++;
         }
         Parser par;
-        par.parse(tokenBody);
+        par.parse(tokenBody, "Expression");
         body->body = (par.AST);
         node->body = move(body);
         this->AST.push_back((shared_ptr<Node>)(move(node)));
+        i = j+1;
       }
-    } else if (token[0] == "STRING" || token[0] == "NUMBER") {
+    }else if(pType == "Expression" && tokens[i][0] == "WORD" && tokens[i+1][0] == "O-PAREN") {
+      shared_ptr<funcCall> node = make_shared<funcCall>();
+      shared_ptr<Expression> params = make_shared<Expression>();
+
+      node->name = tokens[i][1];
+      int j = i+2;
+      vector<vector<string>> tokenBody;
+
+      int parenCount = 1;
+
+      while (parenCount != 0) {
+        if(tokens[j][0] == "O-PAREN") {
+          parenCount++;
+        }else if(tokens[j][0] == "C-PAREN") {
+          parenCount--;
+        }
+        tokenBody.push_back(tokens[j]);
+        j++;
+      }
+
+      Parser par;
+      par.parse(tokenBody, "Expression");
+      params->body = (par.AST);
+      node->params = move(params);
+      this->AST.push_back((shared_ptr<Node>)(move(node)));
+      i = j;
+    } 
+    
+    
+    else if (token[0] == "STRING" || token[0] == "NUMBER") {
       Literal literal = Literal();
       literal.type = token[0];
       literal.value = token[1];

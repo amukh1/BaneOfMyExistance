@@ -1,1 +1,1 @@
-[{"type":"VARIABLEDECLARATION","identifier":{"type":"IDENTIFIER","value":"x"},"body":{"type":"EXPRESSION","body":[{"type":"LITERAL","vtype":"NUMBER","value":"3"}]}},{"type":"LITERAL","vtype":"NUMBER","value":"3"}]
+[{"ntype":"FUNCCALL","name":"printf","params":{"type":"EXPRESSION","body":[{"ntype":"FUNCCALL","name":"printf","params":{"type":"EXPRESSION","body":[{"ntype":"FUNCCALL","name":"printf","params":{"type":"EXPRESSION","body":[{"type":"LITERAL","vtype":"NUMBER","value":"6"},{"type":"LITERAL","vtype":"NUMBER","value":"5"}]}}]}}]}}]

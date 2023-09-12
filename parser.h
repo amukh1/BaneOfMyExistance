@@ -13,5 +13,5 @@ using namespace std;
 class Parser {
     public:
     vector<shared_ptr<Node>> AST;
-    void parse(vector<vector<string>> tokens);
+    void parse(vector<vector<string>> tokens, string pType);
 };

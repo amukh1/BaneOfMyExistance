@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
   // Parsing
   Parser parser;
-  parser.parse(lexer.tokens);
+  parser.parse(lexer.tokens, "Expression");
   cout << parser.AST.size() << endl;
 
   // Dump JSON

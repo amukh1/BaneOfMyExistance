@@ -59,13 +59,18 @@ return ret;
 string variableDeclaration::JSON() {
 //   Identifier id = (this->identifier);
   // cout << this->identifier->ntype << endl;
-  string json = "{\"type\":\"" + this->ntype + "\",\"identifier\":" + this->identifier->JSON();
+  string json = "{\"ntype\":\"" + this->ntype + "\",\"type\":\"" + this->type + "\",\"identifier\":" + this->identifier->JSON();
   if(this->isDefined) {
     json += ",\"body\":" + this->body->JSON() + "}";
   } else {
     json += "}";
   }
   cout << json << endl;
+  return json;
+}
+
+string funcCall::JSON() {
+  string json = "{\"ntype\":\"" + this->ntype + "\",\"name\":\"" + this->name + "\",\"params\":" + this->params->JSON() + "}";
   return json;
 }
 
